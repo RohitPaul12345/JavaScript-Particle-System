@@ -12,20 +12,20 @@
 
   // Save a reference to the global object (`window` in the browser, `global`
   // on the server).
-  var root = this;
+  let root = this;
 
   // Save the previous value of the `Backbone` variable, so that it can be
   // restored later on, if `noConflict` is used.
-  var previousBackbone = root.Backbone;
+  let previousBackbone = root.Backbone;
 
   // Create a local reference to array methods.
-  var ArrayProto = Array.prototype;
-  var slice = ArrayProto.slice;
-  var splice = ArrayProto.splice;
+  let ArrayProto = Array.prototype;
+  let slice = ArrayProto.slice;
+  let splice = ArrayProto.splice;
 
   // The top-level namespace. All public Backbone classes and modules will
   // be attached to this. Exported for both CommonJS and the browser.
-  var Backbone;
+  let Backbone;
   if (typeof exports !== 'undefined') {
     Backbone = exports;
   } else {
@@ -36,7 +36,7 @@
   Backbone.VERSION = '0.9.2';
 
   // Require Underscore, if we're on the server, and it's not already present.
-  var _ = root._;
+  let _ = root._;
 
   // For Backbone's purposes, jQuery, Zepto, or Ender owns the `$` variable.
   Backbone.$ = root.jQuery || root.Zepto || root.ender;
@@ -66,8 +66,8 @@
   // Similar to `goog.inherits`, but uses a hash of prototype properties and
   // class properties to be extended.
   Backbone.extend = function(protoProps, staticProps) {
-    var parent = this;
-    var child;
+    let parent = this;
+    let child;
 
     // The constructor function for the new subclass is either defined by you
     // (the "constructor" property in your `extend` definition), or defaulted
@@ -113,7 +113,7 @@
   // -----------------
 
   // Regular expression used to split event strings
-  var eventSplitter = /\s+/;
+  let eventSplitter = /\s+/;
 
   // A module that can be mixed in to *any object* in order to provide it with
   // custom events. You may bind with `on` or remove with `off` callback functions
@@ -124,12 +124,12 @@
   //     object.on('expand', function(){ alert('expanded'); });
   //     object.trigger('expand');
   //
-  var Events = Backbone.Events = {
+  let Events = Backbone.Events = {
 
     // Bind one or more space separated events, `events`, to a `callback`
     // function. Passing `"all"` will bind the callback to all events fired.
     on: function(events, callback, context) {
-      var calls, event, list;
+      let calls, event, list;
       if (!callback) return this;
 
       events = events.split(eventSplitter);
@@ -147,7 +147,7 @@
     // with that function. If `callback` is null, removes all callbacks for the
     // event. If `events` is null, removes all bound callbacks for all events.
     off: function(events, callback, context) {
-      var event, calls, list, i;
+      let event, calls, list, i;
 
       // No events, or removing *all* events.
       if (!(calls = this._callbacks)) return this;
@@ -180,7 +180,7 @@
     // (unless you're listening on `"all"`, which will cause your callback to
     // receive the true name of the event as the first argument).
     trigger: function(events) {
-      var event, calls, list, i, length, args, all, rest;
+      let event, calls, list, i, length, args, all, rest;
       if (!(calls = this._callbacks)) return this;
 
       rest = [];
