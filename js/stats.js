@@ -3,7 +3,7 @@
 define(['vendor/stats.min'], function () {
   "use strict";
 
-  var stats = new Stats();
+  let stats = new Stats();
   stats.setMode(0); // 0: fps, 1: ms
 
   // Align top-left
