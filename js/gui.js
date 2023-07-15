@@ -19,22 +19,22 @@ define(['examples','lib/Vector','lib/Particle','lib/Field','lib/Emitter'], funct
       'load' : this.loadState.bind(this)
     };
 
-    var main = new dat.GUI();
+    let main = new dat.GUI();
 
     main.add(particleSystem, 'maxParticles', 100,100000).step(100);
-    var particleSize = main.add(Particle, 'size', 1,5).step(1);
+    let particleSize = main.add(Particle, 'size', 1,5).step(1);
     main.add(this.options, 'clickBehavior', ['repel','attract']).onChange(function(val){particleSystem.mouseFieldStrength = val === 'repel' ? -140 : 140;});
     main.add(this.options, 'add emitter');
     main.add(this.options, 'add field');
     main.add(this.options, 'load');
     main.add(this.options, 'save');
-    var drawOptions = main.addFolder('draw options');
+    let drawOptions = main.addFolder('draw options');
     drawOptions.add(particleSystem.draw, 'objects');
     drawOptions.add(particleSystem.draw, 'particles');
     drawOptions.add(particleSystem.draw, 'accelerations');
     drawOptions.add(particleSystem.draw, 'velocities');
     drawOptions.add(display.draw, 'info');
-    var drawColor = drawOptions.addColor(Particle,'color').onChange(function(val){Particle.color = _(val).map(function(c,i){return i < 3 ? ~~c : c;});});
+    let drawColor = drawOptions.addColor(Particle,'color').onChange(function(val){Particle.color = _(val).map(function(c,i){return i < 3 ? ~~c : c;});});
     //var drawStyle = drawOptions.add({draw:'Basic'},'draw', Particle.drawFunctions).onChange(function(val){Particle.prototype.draw = Particle.prototype['draw' + val]});
     //drawOptions.open();
     main.add(this.options, 'example', examples).onChange(this.loadState.bind(this));
@@ -64,7 +64,7 @@ define(['examples','lib/Vector','lib/Particle','lib/Field','lib/Emitter'], funct
     particleSystem.on('objectMouseOut',objectMouseOut, this);
 
     window.addEventListener('keypress',function(evt){
-      var stop = false;
+      let stop = false;
       switch (evt.which) {
         case 32  :
           display.togglePause();
@@ -91,9 +91,9 @@ define(['examples','lib/Vector','lib/Particle','lib/Field','lib/Emitter'], funct
   _.extend(GUI.prototype, {
     onObjectClick : function(evt) {
       this.removeSecondaryControls();
-      var object = evt.particleTarget;
-      var secondary = this.ui.secondary = new dat.GUI({autoPlace : true});
-      var options = {
+      let object = evt.particleTarget;
+      let secondary = this.ui.secondary = new dat.GUI({autoPlace : true});
+      let options = {
         remove : function() {
           if (object.constructor === Field) {
             this.particleSystem.removeField(object);
@@ -125,7 +125,7 @@ define(['examples','lib/Vector','lib/Particle','lib/Field','lib/Emitter'], funct
     },
     loadState : function(stateString) {
       stateString = stateString || localStorage.getItem('systemState') || this.loadState(examples[0]);
-      var separatorPos = stateString.indexOf(':');
+      let separatorPos = stateString.indexOf(':');
       this.loadCustomState(stateString.substr(0,separatorPos));
       stateString = stateString.substr(separatorPos+1);
       this.particleSystem.fromString(stateString);
@@ -134,25 +134,25 @@ define(['examples','lib/Vector','lib/Particle','lib/Field','lib/Emitter'], funct
       this.updateGui();
     },
     getState : function() {
-      var stateString = this.getCustomState() + ':' + this.particleSystem.toString();
+      let stateString = this.getCustomState() + ':' + this.particleSystem.toString();
       return stateString;
     },
     saveState : function() {
       localStorage.setItem('systemState',this.getState());
     },
     updateGui : function() {
-      var controllers = [].concat(this.ui.main.__controllers,this.ui.drawOptions.__controllers);
+      let controllers = [].concat(this.ui.main.__controllers,this.ui.drawOptions.__controllers);
       _(controllers).each(function(c){c.updateDisplay();});
     },
     loadCustomState : function(string) {
-      var parts = string.split(',');
+      let parts = string.split(',');
       this.display.draw.continuous = parts[0] === '1' ? true : false;
       //drawStyle.setValue(parts[1]);
       if (parts[2]) this.controllers.drawColor.setValue(parts[2].split('|'));
       this.controllers.particleSize.setValue(parts[3] || 2);
     },
     getCustomState : function() {
-      var parts = [
+      let parts = [
         (this.display.draw.continuous ? '1' : '0'),
         '',
         Particle.color.join('|'),
