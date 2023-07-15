@@ -14,16 +14,16 @@ require(
   function(ParticleSystem, Display, Vector, GUI){
     "use strict";
 
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
     window.addEventListener('resize', resize); resize();
 
-    var display = new Display(document.getElementById('canvas'));
+    let display = new Display(document.getElementById('canvas'));
     display.init();
-    var particleSystem = new ParticleSystem().init(display);
+    let particleSystem = new ParticleSystem().init(display);
     display.start();
 
-    var gui = new GUI(particleSystem, display);
+    let gui = new GUI(particleSystem, display);
 
     particleSystem.addEmitter(new Vector(360,230),Vector.fromAngle(0,2));
     particleSystem.addField(new Vector(700,230), -140);
